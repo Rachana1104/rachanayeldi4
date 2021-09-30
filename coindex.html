@@ -1,99 +1,138 @@
 <html>
 
 <head>
-    <title>Cowin Data</title>
+    <title>Covid World Data</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="https://www.citypng.com/public/uploads/preview/-115894910249ovqgoa0nf.png" type="image/gif">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
     <style>
-        #tableTh {
-            cursor: pointer;
+        th {
+            background-color: red;
         }
         
         th:hover {
             background-color: black;
             color: white;
+            cursor: pointer;
         }
-        /* @media screen and (max-width: 700px) {
-            table {
-                border: 0;
-            }
-            table caption {
-                font-size: 1.3em;
-            }
-            table thead {
-                border: none;
-                clip: rect(0 0 0 0);
-                height: 1px;
-                margin: -1px;
-                overflow: hidden;
-                padding: 0;
-                position: absolute;
-                width: 1px;
-            }
-            table tr {
-                border-bottom: 3px solid rgb(141, 135, 135);
-                display: block;
-                margin-bottom: .625em;
-            }
-            table td {
-                border-bottom: 1px solid #ddd;
-                display: block;
-                font-size: .8em;
-                text-align: right;
-            }
-            table td::before {
-                float: left;
-                font-weight: bold;
-                text-transform: uppercase;
-            }
-            table td:last-child {
-                border-bottom: 0;
-            }
-            td:nth-of-type(1):before {
-                content: "Country";
-            }
-            td:nth-of-type(2):before {
-                content: "Cases";
-            }
-            td:nth-of-type(3):before {
-                content: "Active Cases";
-            }
-            td:nth-of-type(4):before {
-                content: "Deaths";
-            }
-            td:nth-of-type(5):before {
-                content: "Critical Cases";
-            }
-            td:nth-of-type(6):before {
-                content: "Total tests";
-            }
-        }*/
+        
+        tr:hover {
+            background-color: black;
+            color: white;
+        }
         
         body {
             font-family: "Open Sans", sans-serif;
             line-height: 1.25;
+        }
+        
+        .dark-mode {
+            background-color: black;
+            color: white;
+        }
+        
+        .dark-mode tr:hover {
+            background-color: white;
+            color: black;
+        }
+        
+        .myButton {
+            padding: 10px;
+            display: block;
+            background-color: rgb(117, 99, 214);
+            color: white;
+            text-align: center;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            border-radius: 50%;
+        }
+        
+        h3 {
+            color: red;
+        }
+        
+        #mySearch {
+            width: 100%;
+            height: 5%;
+        }
+        
+        .fa {
+            padding: 20px;
+            font-size: 30px;
+            width: 50px;
+            text-align: center;
+            text-decoration: none;
+            margin: 5px 2px;
+        }
+        
+        .scrollTop {
+            position: fixed;
+            right: 1.5rem;
+            bottom: 7.5rem;
+            z-index: 1000;
+        }
+        
+        .scrollTop img {
+            width: 8rem;
+            background-color: transparent;
+            animation: float 3s linear infinite;
+        }
+        
+        @keyframes float {
+            100%,
+            10% {
+                transform: translateY(0rem);
+            }
+            50% {
+                transform: translateY(-3rem);
+            }
+        }
+        
+        @media screen and (max-width: 700px) {
+            .myButton {
+                width: 8%;
+            }
         }
     </style>
 </head>
 
 <body>
     <script src="coscript2.js"></script>
+    <button class="myButton" onclick="myFunction()">Switch Mode</button>
+
+    <script>
+        function myFunction() {
+            var element = document.body;
+            element.classList.toggle("dark-mode");
+        }
+    </script>
+
+    <center>
+        <h1>
+            Covid World Data
+        </h1>
+        <h3>Take a look at Country Wise Statistics of the Covid Cases across the World</h3>
+        <h4>(Click on the respective header to sort them column wise)</h4><br>
+        <input type="text" id="mySearch" placeholder="Search by Country Names..." onkeyup="searchFun()"></input><br>
+    </center>
     <div class="container">
         <div style="overflow-x:auto;">
-            <table class="table table-striped">
-                <caption>Cowin World Data</caption>
-                <thead>
+            <table class="table table-dark " id="myTable">
+                <thead><br>
                     <tr id="tableTh">
-                        <th>Country</th>
-                        <th data-column="cases">Cases</th>
-                        <th data-column="active_cases">Active Cases</th>
-                        <th data-column="deaths">Deaths</th>
-                        <th data-column="serious_critical">Critical Cases</th>
-                        <th data-column="total_tests">Total tests</th>
+                        <th data-column="country" data-order="desc">Country </th>
+                        <th data-column="cases" data-order="desc">Cases </th>
+                        <th data-column="active_cases" data-order="desc">Active Cases </th>
+                        <th data-column="deaths" data-order="desc">Deaths</th>
+                        <th data-column="serious_critical" data-order="desc">Critical Cases</th>
+                        <th data-column="total_tests" data-order="desc">Total tests</th>
                     </tr>
                 </thead>
                 <tbody id="data">
@@ -102,6 +141,18 @@
             </table>
         </div>
     </div>
+    <center>
+        <h4>Reach out to me on</h4>
+        <a href="#" class="fa fa-facebook"></a>
+        <a href="#" class="fa fa-linkedin"></a>
+        <a href="#" class="fa fa-instagram"></a>
+        <a href="#" class="fa fa-github"></a>
+        <h4 class="credit">Created by <a href="#">RACHANA YELDI </a>&copy; copyright @ 2021</h4>
+    </center>
+    <a href="#" class="scrollTop" id="myScroll">
+        <img src="https://www.clipartmax.com/png/middle/280-2808828_to-top-button-transparent-background-rocket-gif.png">
+    </a>
+
 </body>
 
 </html>
